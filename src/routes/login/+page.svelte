@@ -5,10 +5,12 @@
     import { initializeApp, getApps, getApp } from "firebase/app";
     import { goto } from '$app/navigation';
     import { EnvelopeSolid, LockSolid } from 'flowbite-svelte-icons'; // Import icons
+    import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
   
     const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
     const auth = getAuth(app);
-  
+    const db = getFirestore(app);
+
     let email = "";
     let password = "";
     let errorMessage = "";
@@ -16,38 +18,76 @@
     let rememberMe = false; // Add remember me state
   
     async function loginUser() {
-      isLoading = true;
-      errorMessage = ""; // Clear previous errors
-      
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        if (rememberMe) {
-          // Implement remember me functionality
-          localStorage.setItem('userEmail', email);
+    isLoading = true;
+    errorMessage = "";
+
+    try {
+        if (!email || !password) {
+            throw { code: "auth/missing-fields" };
         }
-        goto('/');
-      } catch (error: any) {
-        // More user-friendly error messages
-        switch (error.code) {
-          case 'auth/invalid-email':
-            errorMessage = "Please enter a valid email address.";
-            break;
-          case 'auth/user-disabled':
-            errorMessage = "This account has been disabled.";
-            break;
-          case 'auth/user-not-found':
-            errorMessage = "No account found with this email.";
-            break;
-          case 'auth/wrong-password':
-            errorMessage = "Incorrect password.";
-            break;
-          default:
-            errorMessage = "Failed to login. Please try again.";
+
+        console.log("Attempting login with email:", email);
+
+        // Sign in user
+        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        console.log("Authenticated User:", user);
+
+        // Fetch user role from Firestore
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (!userDocSnap.exists()) {
+            console.error("No document found for UID:", user.uid);
+            throw { code: "auth/no-user-data" };
         }
-      } finally {
+
+        const userData = userDocSnap.data();
+        console.log("Firestore Data:", userData);
+
+        if (!userData.role) {
+            console.error("User role is missing in Firestore!");
+            throw { code: "auth/no-user-data" };
+        }
+
+        const { role } = userData;
+        console.log("User Role:", role);
+
+        // Redirect user based on role
+        switch (role) {
+            case "admin":
+                goto('/admin');
+                break;
+            case "user":
+                goto('/user');
+                break;
+            default:
+                throw { code: "auth/unauthorized" };
+        }
+
+    } catch (error: any) {
+        console.error("Authentication error:", error);
+
+        const errorMessages: { [key: string]: string } = {
+            "auth/invalid-email": "Please enter a valid email address.",
+            "auth/user-disabled": "This account has been disabled.",
+            "auth/user-not-found": "No account found with this email.",
+            "auth/wrong-password": "Incorrect password.",
+            "auth/email-not-verified": "Please verify your email before logging in.",
+            "auth/missing-fields": "Email and password are required.",
+            "auth/no-user-data": "User data not found in Firestore.",
+            "auth/unauthorized": "Unauthorized access. Contact admin.",
+            "default": "Failed to login. Please try again.",
+        };
+
+        errorMessage = errorMessages[error.code as string] || errorMessages["default"];
+
+    } finally {
         isLoading = false;
-      }
     }
+}
+
+
+
   </script>
   
   <main class="min-h-screen flex items-center justify-center py-6 px-4 sm:px-6 lg:px-8">

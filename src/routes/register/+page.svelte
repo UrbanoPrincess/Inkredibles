@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getFirestore, collection, addDoc } from 'firebase/firestore';
+    import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
     import { firebaseConfig } from "$lib/firebaseConfig";
     import { initializeApp, getApps, getApp } from "firebase/app";
     import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -42,13 +42,13 @@
         const user = userCredential.user;
   
         // Add user with role to Firestore
-        await addDoc(collection(db, "users"), {
-          email,
-          username,  
-          role, // Save role
-          createdAt: new Date(),
-          uid: user.uid,
-        });
+        await setDoc(doc(db, "users", user.uid), {
+  email,
+  username,
+  role, // Save role
+  createdAt: new Date(),
+  uid: user.uid, // Ensure we store uid
+});
   
         email = "";
         password = "";
