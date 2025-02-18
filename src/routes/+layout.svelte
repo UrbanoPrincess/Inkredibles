@@ -88,7 +88,7 @@
                 <a class="tab" href="./" aria-label="pricing">Pricing</a>
             </nav>
             
-            <button class="login-button" aria-label="login" on:click={() => goto('./loginAdmin')}>Login</button>
+            <button class="login-button" aria-label="login" on:click={() => goto('./login')}>Login</button>
 
        
     </header>

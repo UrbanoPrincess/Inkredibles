@@ -15,5 +15,7 @@ export default {
       },
     },
   },
-  plugins: [],
-} as Config;
+  plugins: [
+    require('flowbite/plugin'), // Adds Flowbite plugin for Tailwind CSS
+  ],
+} satisfies Config;

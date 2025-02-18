@@ -2,7 +2,7 @@
     .hero-section {
         background-image: url('/images/bg.png'); /* Background Image */
         background-size: cover; /* Ensures the background covers the section */
-        background-position: top left; /* Aligns the background image to the top left */
+        background-position: top left; 
         background-repeat: no-repeat;
         
         display: flex;
