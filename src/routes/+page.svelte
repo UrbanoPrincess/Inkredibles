@@ -5,7 +5,7 @@
 </script>
 <style>
     .hero-section {
-        background-image: url('/images/bg.png'); /* Background Image */
+        background-image: url('/images/bg.png'); 
         background-size: cover;
         background-position: top left;
         background-repeat: no-repeat;
@@ -60,8 +60,8 @@
     }
 
     .login-button {
-        background-color: #EDEDED; /* Light gray background */
-        color: #333; /* Dark text for contrast */
+        background-color: #EDEDED; 
+        color: #333; 
         border: none;
         padding: 8px 12px;
         border-radius: 5px;
@@ -73,19 +73,19 @@
         font-weight: bold;
         white-space: nowrap;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Soft shadow */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
     }
 
     .login-button:hover {
-        background-color: #D6D6D6; /* Slightly darker gray on hover */
-        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
+        background-color: #D6D6D6; 
+        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3); 
     }
 
     .navbar {
         display: flex;
-        justify-content: center; /* Centers horizontally */
-        align-items: center; /* Aligns vertically */
-        gap: 20px; /* Adds spacing between links */
+        justify-content: center; 
+        align-items: center;
+        gap: 20px; 
         padding: 10px 0;
     }
 </style>
@@ -100,7 +100,7 @@
             <a class="tab" href="./" aria-label="home">Home</a>
             <a class="tab" href="./" aria-label="about">About Us</a>
             <a class="tab" href="./" aria-label="services">Services</a>
-            <a class="tab" href="./" aria-label="pricing">Pricing</a>
+            
         </nav>
 
         <button class="login-button" aria-label="login" on:click={() => goto('./login')}>Login</button>

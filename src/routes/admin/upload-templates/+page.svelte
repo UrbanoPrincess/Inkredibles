@@ -72,7 +72,7 @@
         clearForm();
         formModalOpen = false;
         showToast = true; // Show Toast
-        setTimeout(() => (showToast = false), 3000); // Hide Toast after 3 seconds
+        setTimeout(() => (showToast = false), 3000); 
       } catch (error) {
         console.error("Error adding template:", error);
         alert("Failed to add template. Please try again.");
