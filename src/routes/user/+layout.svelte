@@ -78,19 +78,19 @@
             <img src={site.img} alt="Logo" class="w-24 h-24 max-w-full max-h-full object-contain" />
           </div>
   
-          <SidebarItem label="Dashboard" href="/admin/dashboard" class="text-black font-semibold hover:bg-gray-200 rounded-md p-2">
+          <SidebarItem label="Dashboard" href="/user/dashboard" class="text-black font-semibold hover:bg-gray-200 rounded-md p-2">
             <svelte:fragment slot="icon">
               <ChartPieSolid class="w-6 h-6 text-black transition duration-75 group-hover:text-gray-700" />
             </svelte:fragment>
           </SidebarItem>
   
-          <SidebarItem label="Orders" href="/admin/orders" class="text-black font-semibold hover:bg-gray-200 rounded-md p-2">
+          <SidebarItem label="Orders" href="/user/orders" class="text-black font-semibold hover:bg-gray-200 rounded-md p-2">
             <svelte:fragment slot="icon">
               <ClipboardListSolid class="w-6 h-6 text-black transition duration-75 group-hover:text-gray-700" />
             </svelte:fragment>
           </SidebarItem>
   
-          <SidebarItem label="Upload Templates" href="/admin/upload-templates" class="text-black font-semibold hover:bg-gray-200 rounded-md p-2">
+          <SidebarItem label="Upload Templates" href="/user/home" class="text-black font-semibold hover:bg-gray-200 rounded-md p-2">
             <svelte:fragment slot="icon">
               <UploadSolid class="w-6 h-6 text-black transition duration-75 group-hover:text-gray-700" />
             </svelte:fragment>
