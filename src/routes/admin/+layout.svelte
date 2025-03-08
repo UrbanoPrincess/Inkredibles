@@ -49,9 +49,7 @@
   }
 
   @media (min-width: 768px) {
-    .sidebar {
-      position: relative;
-    }
+   
   }
 </style>
 
