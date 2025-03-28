@@ -15,7 +15,6 @@
       isSidebarOpen = !isSidebarOpen;
     }
   
-    // Close sidebar when clicking outside
     /**
      * @param {{ target: any; }} event
      */
@@ -40,11 +39,10 @@
       display: flex;
     }
     
-    /* Ensures that sidebar and content are properly aligned */
     .content-area {
       flex-grow: 1;
       min-height: 100vh;
-      padding: 1rem; /* Adjust padding */
+      padding: 1rem; 
       overflow: auto;
     }
   
