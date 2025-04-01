@@ -6,6 +6,7 @@
     import { initializeApp, getApps, getApp } from "firebase/app";
     import { getAuth } from 'firebase/auth';
     import { Modal, Button } from 'flowbite-svelte';
+    import EditorModal from '$lib/components/Editor.svelte';
 
     // Firebase initialization
     const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -17,6 +18,10 @@
     let selectedTemplate: any = null;
     let orderModalOpen = false;
     let showToast = false;
+    
+    // Editor modal state
+    let showEditor = false;
+    let selectedImage: any = null;  // Added explicit 'any' type
 
     // Fetch templates from Firestore
     async function fetchTemplates() {
@@ -38,7 +43,7 @@
         }
 
         try {
-            const user = auth.currentUser ;
+            const user = auth.currentUser;
             const orderData = {
                 templateId: selectedTemplate.templateId,
                 userEmail: user ? user.email : "Anonymous",
@@ -69,6 +74,17 @@
 
         alert(`${template.title} has been added to your cart.`);
     }
+    
+    // Editor modal functions
+    function openEditor(image: any) {  // Added explicit 'any' type to parameter
+        selectedImage = image;
+        showEditor = true;
+    }
+
+    function closeEditor() {
+        showEditor = false;
+        selectedImage = null;
+    }
 </script>
 
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen py-6">
@@ -81,8 +97,11 @@
                 <img src={template.imageBase64} alt={template.title} class="w-full h-auto rounded-lg" />
                 <h3 class="mt-2 font-semibold">{template.title}</h3>
                 <p class="text-gray-600">{template.category}</p>
-                <Button on:click={() => { selectedTemplate = template; orderModalOpen = true; }} class="mt-2 bg-blue-500 text-white">Order</Button>
-                <Button on:click={() => addToCart(template)} class="mt-2 bg-green-500 text-white">Add to Cart</Button>
+                <div class="flex flex-col sm:flex-row gap-2 mt-2">
+                    <Button on:click={() => { selectedTemplate = template; orderModalOpen = true; }} class="bg-blue-500 text-white">Order</Button>
+                    <Button on:click={() => addToCart(template)} class="bg-green-500 text-white">Add to Cart</Button>
+                    <Button on:click={() => openEditor(template)} class="bg-purple-500 text-white">Customize</Button>
+                </div>
             </div>
         {/each}
     </div>
@@ -101,5 +120,13 @@
             <CheckCircleSolid class="w-6 h-6 text-green-500" />
             Order placed successfully!
         </Toast>
+    {/if}
+    
+    <!-- Editor Modal -->
+    {#if showEditor}
+        <EditorModal 
+            image={selectedImage} 
+            closeModal={closeEditor} 
+        />
     {/if}
 </main>
