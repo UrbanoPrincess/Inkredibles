@@ -55,7 +55,7 @@
         // Redirect user based on role
         switch (role) {
             case "admin":
-                goto('/admin');
+                goto('/admin/upload-templates');
                 break;
             case "user":
                 goto('/user/order-templates');
