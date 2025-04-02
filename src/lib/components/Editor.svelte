@@ -2,19 +2,13 @@
 <script lang="ts">
   import "@fortawesome/fontawesome-free/css/all.min.css";
   import html2canvas from 'html2canvas';
-  import { createEventDispatcher, onMount } from 'svelte'; // Import necessary Svelte functions
+  import { createEventDispatcher, onMount } from 'svelte'; 
 
-  // --- Props and Events ---
-  /**
-   * The template data passed from the parent component.
-   * Should contain properties like imageBase64, title, etc.
-   * Define a more specific type if possible instead of 'any'.
-   */
-  export let image: any = null; // Changed prop name from selectedTemplate to image
-  const dispatch = createEventDispatcher(); // Create dispatcher for events
+  export let image: any = null; 
+  const dispatch = createEventDispatcher(); 
 
   // --- Internal State ---
-  let imageSrc: string = "/images/sample-frame.jpg"; // Default image
+  let imageSrc: string = "/images/sample-frame.jpg"; 
   let customText: string = "Customized Text";
   let textColor: string = "#000000";
   let fontFamily: string = "great-vibes";
@@ -23,33 +17,30 @@
   let imageFrameElement: HTMLDivElement;
   let isSaving: boolean = false;
 
-  // --- Lifecycle ---
   onMount(() => {
-    // Initialize editor state when the component mounts and receives the image prop
+   
     if (image && image.imageBase64) {
-      imageSrc = image.imageBase64; // Use the template's image initially
+      imageSrc = image.imageBase64;
     }
     if (image && image.title) {
-      customText = image.title; // Use the template's title initially
+      customText = image.title; 
     }
-    // If no image prop or no imageBase64, it keeps the default "/images/sample-frame.jpg"
+  
   });
 
-  // --- Event Handlers ---
   function handleClose() {
-    dispatch('close'); // Dispatch the 'close' event which the parent listens for
+    dispatch('close'); 
   }
 
   function addToCart() {
-    // You might want to pass the customized state (imageSrc, customText, etc.)
-    // back to the parent or handle cart logic differently here.
+ 
     alert("✅ Added to Cart! (Editor version - Implement actual logic)");
-    // Optionally close after adding to cart: handleClose();
+
   }
 
   function buyNow() {
     alert("🛒 Redirecting to Checkout... (Editor version - Implement actual logic)");
-    // Optionally close before redirecting: handleClose();
+ 
   }
 
   async function saveImage() {
@@ -61,12 +52,11 @@
     isSaving = true;
     alert("Generating image, please wait...");
     try {
-      // Temporarily remove buttons before capturing if they overlay the frame
-      // Or ensure the capture only targets the frame itself
-      const canvas = await html2canvas(imageFrameElement, { // Target only the frame
+
+      const canvas = await html2canvas(imageFrameElement, { 
           useCORS: true,
           allowTaint: true,
-          // backgroundColor: null // Use transparent background unless frame has specific bg
+        
       });
       const imageMimeType = 'image/png';
       const imageDataUrl = canvas.toDataURL(imageMimeType);
@@ -99,9 +89,7 @@
       };
       reader.readAsDataURL(file);
     } else if (type === "text") {
-      // customText is already bound using bind:value, so this function
-      // isn't strictly needed for text input, but keeping it for potential future use.
-      // customText = target.value;
+   
     }
   }
 </script>
@@ -118,11 +106,9 @@
   .close-button:hover { color: red; }
   .content-wrapper { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: flex-start; }
 
-  /* Panels */
   .left-panel, .right-panel { flex: 1 1 45%; min-width: 300px; }
   .left-panel { display: flex; flex-direction: column; gap: 10px; }
 
-  /* --- MODIFIED right-panel --- */
   .right-panel {
     display: flex;
     flex-direction: column; /* Stack items vertically */
@@ -137,14 +123,14 @@
   .image-container img { max-width: 100%; max-height: 250px; object-fit: contain; }
   .text-preview { width: 100%; text-align: center; padding: 10px 5px; min-height: 30px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; word-wrap: break-word; }
 
-  /* --- MODIFIED button-group (now under right-panel) --- */
+  
   .button-group {
     display: flex;
-    justify-content: center; /* Center buttons horizontally */
+    justify-content: center; 
     gap: 10px;
-    width: 90%; /* Make width similar to image frame for alignment */
-    max-width: 400px; /* Match max-width of image frame */
-    flex-wrap: nowrap; /* Keep buttons on one line */
+    width: 90%; 
+    max-width: 400px; 
+    flex-wrap: nowrap; 
   }
 
   /* Individual Buttons */
@@ -158,30 +144,26 @@
   .save-image:hover { background-color: #45a049; }
   .save-image:disabled { background-color: #cccccc; cursor: not-allowed; }
 
-  /* Form Controls */
   label { font-weight: bold; margin-bottom: 5px; display: block; }
   input[type="text"], input[type="color"], select, input[type="file"] { width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-  select { height: 38px; /* Adjust if needed */ }
-
-  /* Media Query for Responsiveness */
+  select { height: 38px;  }
+ 
   @media (max-width: 768px) {
     .modal-content { padding: 15px; }
     .content-wrapper { flex-direction: column; }
-    .left-panel, .right-panel { width: 100%; min-width: auto; flex: 1 1 auto; /* Adjust flex basis */ }
+    .left-panel, .right-panel { width: 100%; min-width: auto; flex: 1 1 auto;  }
     .right-panel {
-       gap: 15px; /* Adjust gap for mobile */
+       gap: 15px; 
     }
-    .image-frame { max-width: 100%; width: 100%; /* Ensure it fits */ }
+    .image-frame { max-width: 100%; width: 100%;  }
     .button-group {
-       width: 100%; /* Full width on mobile */
+       width: 100%; 
        max-width: none;
-       /* Consider allowing wrap on very narrow mobile if buttons don't fit */
-       /* flex-wrap: wrap; */
-       justify-content: center; /* Ensure centering */
+       justify-content: center; 
     }
     .button {
-      padding: 8px 12px; /* Slightly smaller padding on mobile */
-      font-size: 14px; /* Slightly smaller font on mobile */
+      padding: 8px 12px; 
+      font-size: 14px; 
     }
     .button i {
       font-size: 16px;
@@ -257,7 +239,6 @@
             {customText || "Your Text Here"}
           </p>
         </div>
-
         <!-- Buttons: Add to Cart, Buy Now & Save Image -->
         <div class="button-group">
           <button class="button add-to-cart" on:click={addToCart}>
@@ -274,9 +255,7 @@
              <i class="fas fa-download"></i> {isSaving ? 'Saving...' : 'Save Image'}
            </button>
         </div>
-        <!-- End of Button Group -->
-
-      </div> <!-- End Right Panel -->
-    </div> <!-- End Content Wrapper -->
-  </div> <!-- End Modal Content -->
-</div> <!-- End Modal -->
+      </div> 
+    </div> 
+  </div>
+</div> 

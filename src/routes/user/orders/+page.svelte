@@ -10,6 +10,11 @@
             orders = JSON.parse(storedOrders);
         }
     });
+    function clearOrders() {
+    localStorage.removeItem('orders'); // Remove 'orders' from local storage
+    orders = []; // Clear the local array as well
+}
+
 </script>
 
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen py-6">
@@ -29,4 +34,5 @@
             {/each}
         </div>
     {/if}
+ 
 </main>

@@ -58,7 +58,7 @@
                 goto('/admin');
                 break;
             case "user":
-                goto('/user');
+                goto('/user/order-templates');
                 break;
             default:
                 throw { code: "auth/unauthorized" };
@@ -185,11 +185,11 @@
   </main>
   
   <style>
-      /*:global(body) {
+     /*  :global(body) {
       background-color: #ff2a043e;
     }
   
-   Optional: Style the input focus states */
+  Optional: Style the input focus states */
     :global(.input:focus) {
       border-color: #800000;
       box-shadow: 0 0 0 1px #800000;
