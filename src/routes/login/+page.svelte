@@ -185,11 +185,11 @@
   </main>
   
   <style>
-     /*  :global(body) {
-      background-color: #ff2a043e;
+     :global(body) {
+      background-color: #ff750422;
     }
   
-  Optional: Style the input focus states */
+   /* Optional: Style the input focus states */
     :global(.input:focus) {
       border-color: #800000;
       box-shadow: 0 0 0 1px #800000;
