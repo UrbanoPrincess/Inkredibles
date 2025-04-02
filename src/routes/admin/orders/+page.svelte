@@ -81,8 +81,8 @@
             errorToastMessage = `Failed to update status for order ${orderId.substring(0, 5)}...`;
             setTimeout(() => showErrorToast = false, 4000);
         } finally {
-            updatingStatusId = null; // Reset loading state for this order
-            isUpdatingStatus = false; // Reset general flag
+            updatingStatusId = null; 
+            isUpdatingStatus = false;
         }
     }
 
