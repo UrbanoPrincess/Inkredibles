@@ -62,7 +62,7 @@
 
       setTimeout(() => {
         showToast = false;
-        goto('/'); // Redirect after success
+        goto('/login'); // Redirect after success
       }, 3000);
 
     } catch (error: unknown) {
